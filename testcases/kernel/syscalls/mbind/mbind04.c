@@ -20,6 +20,8 @@
 #include "tst_test.h"
 #include "tst_numa.h"
 
+#define MPOL_WEIGHTED_INTERLEAVE 6
+
 #ifdef HAVE_NUMA_V2
 
 static size_t page_size;
@@ -114,6 +116,7 @@ static const int modes[] = {
 	MPOL_PREFERRED,
 	MPOL_BIND,
 	MPOL_INTERLEAVE,
+	MPOL_WEIGHTED_INTERLEAVE,
 };
 
 static void verify_mbind(unsigned int n)

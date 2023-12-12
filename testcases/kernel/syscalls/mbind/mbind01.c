@@ -20,6 +20,8 @@
 #include "tst_numa.h"
 #include "lapi/numaif.h"
 
+#define MPOL_WEIGHTED_INTERLEAVE 6
+
 #ifdef HAVE_NUMA_V2
 
 #define MEM_LENGTH (4 * 1024 * 1024)
@@ -81,7 +83,20 @@ static struct test_case tcase[] = {
 		.test = test_none,
 	},
 	{
+		POLICY_DESC_TEXT(MPOL_WEIGHTED_INTERLEAVE, "no target"),
+		.ret = -1,
+		.err = EINVAL,
+		.test = test_none,
+	},
+	{
 		POLICY_DESC(MPOL_INTERLEAVE),
+		.ret = 0,
+		.err = 0,
+		.test = test_default,
+		.exp_nodemask = &nodemask,
+	},
+	{
+		POLICY_DESC(MPOL_WEIGHTED_INTERLEAVE),
 		.ret = 0,
 		.err = 0,
 		.test = test_default,

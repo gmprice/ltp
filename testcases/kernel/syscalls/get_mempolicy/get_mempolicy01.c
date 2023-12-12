@@ -26,6 +26,8 @@
 #include <errno.h>
 #include "tst_numa.h"
 
+#define MPOL_WEIGHTED_INTERLEAVE 6
+
 #define MEM_LENGTH	(4 * 1024 * 1024)
 #define PAGES_ALLOCATED 16u
 
@@ -69,6 +71,11 @@ static struct test_case tcase[] = {
 		.exp_nodemask = &nodemask,
 	},
 	{
+		POLICY_DESC(MPOL_WEIGHTED_INTERLEAVE),
+		.alloc = test_set_mempolicy_default,
+		.exp_nodemask = &nodemask,
+	},
+	{
 		POLICY_DESC_NO_TARGET(MPOL_PREFERRED),
 		.alloc = test_set_mempolicy_none,
 		.exp_nodemask = &nodemask,
@@ -91,6 +98,12 @@ static struct test_case tcase[] = {
 	},
 	{
 		POLICY_DESC_FLAGS(MPOL_INTERLEAVE, MPOL_F_ADDR),
+		.pre_test = test_mbind_default,
+		.alloc = test_set_mempolicy_default,
+		.exp_nodemask = &nodemask,
+	},
+	{
+		POLICY_DESC_FLAGS(MPOL_WEIGHTED_INTERLEAVE, MPOL_F_ADDR),
 		.pre_test = test_mbind_default,
 		.alloc = test_set_mempolicy_default,
 		.exp_nodemask = &nodemask,
