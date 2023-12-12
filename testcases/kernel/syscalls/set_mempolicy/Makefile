@@ -5,7 +5,7 @@ LTPLIBS = ltpnuma
 
 include $(top_srcdir)/include/mk/testcases.mk
 
-NEEDS_LIBS = set_mempolicy01 set_mempolicy02 set_mempolicy03 set_mempolicy04
+NEEDS_LIBS = set_mempolicy01 set_mempolicy02 set_mempolicy03 set_mempolicy04 set_mempolicy05 set_mempolicy06 set_mempolicy07
 
 $(NEEDS_LIBS): LDLIBS  += $(NUMA_LIBS)
 $(NEEDS_LIBS): LTPLDLIBS = -lltpnuma
