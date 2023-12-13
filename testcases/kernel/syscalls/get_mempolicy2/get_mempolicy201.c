@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
+ * Copyright (c) 2023 Gregory Price <gregory.price@memverge.com>
  * Copyright (c) 2020 Petr Vorel <pvorel@suse.cz>
  * Copyright (c) Linux Test Project, 2009-2020
  * Copyright (c) Crackerjack Project, 2007-2008, Hitachi, Ltd
@@ -198,8 +199,6 @@ static void do_test(unsigned int i)
 {
 	struct test_case *tc = &tcase[i];
 	struct mpol_args args;
-	int addr_node;
-	int *addr_node_ptr;
 
 	tst_res(TINFO, "test #%d: %s", i+1, tc->desc);
 
@@ -207,9 +206,7 @@ static void do_test(unsigned int i)
 	args.il_weights = (uint64_t)NULL;
 	args.pol_maxnodes = getnodemask->size;
 
-	addr_node_ptr = (tc->flags & MPOL_F_ADDR) ? &addr_node : NULL;
-
-	TST_EXP_PASS(get_mempolicy2(&args, (uint64_t)tc->addr, addr_node_ptr, tc->flags), "%s", tc->desc);
+	TST_EXP_PASS(get_mempolicy2(&args, (uint64_t)tc->addr, tc->flags), "%s", tc->desc);
 
 	struct bitmask *exp_mask = *(tc->exp_nodemask);
 
