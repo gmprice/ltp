@@ -18,10 +18,9 @@ struct mpol_args {
         uint16_t mode;
         uint16_t mode_flags;
         int32_t home_node;
+        uint64_t pol_maxnodes;
         uint64_t pol_nodes;
         uint64_t il_weights;
-        uint64_t pol_maxnodes;
-        int32_t policy_node;
 };
 
 static inline const char *mbind_flag_name(unsigned flag)
@@ -55,7 +54,6 @@ static int mbind2(unsigned long addr, unsigned long len,
 	args.pol_nodes = (uint64_t)nmask;
 	args.il_weights = (uint64_t)weights;
 	args.pol_maxnodes = maxnode;
-	args.policy_node = 0;
 
 	return syscall(MBIND2, addr, len, &args, sizeof(args), flags);
 }

@@ -25,10 +25,9 @@ struct mpol_args {
 	uint16_t mode;
 	uint16_t mode_flags;
 	int32_t home_node;
+	uint64_t pol_maxnodes;
 	uint64_t pol_nodes;
 	uint64_t il_weights;
-	uint64_t pol_maxnodes;
-	int32_t policy_node;
 };
 
 static int set_mempolicy2(uint16_t mode, uint16_t mode_flags, unsigned long *bm,
@@ -42,7 +41,6 @@ static int set_mempolicy2(uint16_t mode, uint16_t mode_flags, unsigned long *bm,
 	args.pol_nodes = (uint64_t)bm;
 	args.il_weights = (uint64_t)weights;
 	args.pol_maxnodes = maxnode;
-	args.policy_node = 0;
 
 	return syscall(SET_MEMPOLICY2, &args, sizeof(args), 0);
 }
